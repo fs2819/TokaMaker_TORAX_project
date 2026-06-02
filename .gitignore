@@ -1,3 +1,7 @@
+# tokamaker specifics
+tokamaker_eta.prof
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
