@@ -1,0 +1,65 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+%\hypersetup{colorlinks=false}
+\hypersetup{colorlinks,citecolor=black,filecolor=red,linkcolor=blue,urlcolor=blue,pdfnewwindow=true,bookmarksnumbered}
+% Underline hyperlinks. `normalem' keeps \emph as italic (ulem otherwise
+% redefines it to underline). We wrap \href's link text in \uline so links
+% are both blue (from urlcolor above) and underlined.
+\usepackage[normalem]{ulem}
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{\uline{#2}}}
+\usepackage{amsmath}
+\usepackage{amsxtra}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{latexsym}
+% The `comment' package is not installed in this TeX distribution; the
+% `verbatim' package (which is) provides a robust comment environment that
+% swallows its body, including verbatim-like content.
+\usepackage{verbatim}
+
+\title{\vspace{-0.5 in} APPH ? \\ Project \#2}
+\date{v1: 2026-06-23 \\ credit: ?}
+\author{F. Sheehan}
+
+\begin{document}
+
+\maketitle
+
+
+\underline{Introduction}
+
+In this project you will simulate the evolution of a tokamak plasma. You will use the TokaMaker+TORAX workflow, which is the coupling of two open source codes: TokaMaker and TORAX.
+
+\href{https://github.com/OpenFUSIONToolkit/OpenFUSIONToolkit}{TokaMaker} (TM) is a time-\textbf{independent} (steady state) Grad-Shafranov MHD equilibrium solver available through the OpenFUSIONToolkit suite of open source tools. Being familiar with TokaMaker is highly recommended before proceeding. The \href{https://fusion.columbia.edu/build-your-own-tokamak}{Build your own tokamak} project available through the Columbia Fusion Research Center Outreach website is a great way to become familiar with TokaMaker.
+
+\href{https://github.com/google-deepmind/torax}{TORAX} (TX) is a time-\textbf{dependent} transport solver developed by Google DeepMind. It solves the fluid transport equations to model how temperature (thermal energy), current, and density move through the plasma over time. Both codes are entirely open source and available on Github. 
+
+The TM+TX workflow couples these two codes and produces a time dependent solution for the radial kinetic (temperature and density) and current profiles on a realistic geometry (the equilibrium solution from TM). TM+TX passes the results of these two codes back and forth over several (2-4) loops until they converge.
+
+
+The notebook is in a working state using a default configuration. The goal of this project is to change inputs and see the effect on the equilibrated flattop plasma state and performance.
+
+\newpage
+\clearpage
+
+\underline{Part \#1: Steady State}
+
+The initial task it so simulate the steady state (i.e. flattop) plasma. You are using a time dependent workflow to simulate steady state to allow the initial guesses of the current, density, and temperature profiles to \textbf{relax} into forms that satisfy the transport physics employed by TORAX. 
+
+This part will use TMTX in \texttt{steady\_state\_mode}, which speeds up convergence for these types of simulations. You will pass "seed equilibrium" (in the form of .eqdsk files) into TMTX, TORAX will evolve for some period of time (it should be enough that everything is at steady state), then TokaMaker will solve using the profiles output from TORAX to make new equilibria (saved as .eqdsk files). These new equilibria are passed to TORAX and it recomputes the simulation on the updated geometry. After 2 or 3 of these "loops, the simulation should converge and will output the final profiles and equilibrium of the flattop plasma.
+
+The Jupyter notebook is already configured to run the base case. Run the notebook up until 14. Sweeps to make sure everything is running correctly.
+
+1) Use the sweep code framework in section 14 of the notebook to run multiple simulations while sweeping (i.e. scanning) a single variable. 
+
+
+
+\underline{Part \#2: Ramp up}
+
+
+
+\end{document}

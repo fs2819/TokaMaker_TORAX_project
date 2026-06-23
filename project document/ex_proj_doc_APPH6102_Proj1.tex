@@ -1,0 +1,80 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+%\hypersetup{colorlinks=false}
+\hypersetup{colorlinks,citecolor=black,filecolor=red,linkcolor=black,urlcolor=black,pdfnewwindow=true,bookmarksnumbered}
+\usepackage{amsmath}
+\usepackage{amsxtra}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{latexsym}
+% The `comment' package is not installed in this TeX distribution; the
+% `verbatim' package (which is) provides a robust comment environment that
+% swallows its body, including verbatim-like content.
+\usepackage{verbatim}
+
+\title{\vspace{-0.5 in} APPH 6102\\ Project \#1 \vspace{-0.5 in}}
+\date{distributed: Feb 2026 \\ credit: 15 points}
+%\author{C. Paz-Soldan}
+
+\begin{document}
+
+\maketitle
+\vspace{-25 pt}
+In these project components you will be provided with MATLAB and python scripts to get started. The deliverables are: 1) a copy (zipped) of your scripts that can be run without additional files. 2) a slide show presentation of your results, including figures and short descriptive text (like a research presentation. 3) a zoom recording of you delivering your slide show, target 10-15 minutes (short and sweet).\\
+
+\underline{Part \#1: Proto-Cleo Stellarator}\\
+
+In this part you will numerically trace out magnetic surfaces in a full 3D geometry and derive some properties of the field. The field structure is the “Proto-Cleo” stellarator, a 3-fold poloidal and 7-fold toroidal periodicity device. It operated at the UK Culham Laboratory c. 1970\footnote{A summary of the device can be found here: \url{https://doi.org/10.1063/1.1693643}.}. The Proto-Cleo device had a major radius of 0.4 m and a plasma radius of ~0.05 m.\\
+
+MATLAB/python scripts have been provided to calculate the helical field from the Biot-Savart Law from the original coil geometry. Note there is also a toroidal field added analytically (the full system had helical coils and toroidal field coils). You have also been provided with a field line integrator for actually stepping along the magnetic field lines. The assignment has several components, enumerated below.\\
+
+1) By line tracing find the magnetic axis (there may be more than one!), find the outermost separatrix where well-defined surfaces turn into divergent field lines, and plot at least eight magnetic surfaces between the axis and the separatrix. Plot these at 0, 1/4, 1/2 and 3/4 field period toroidal cuts. Hint: Plot Poincare sections.\\
+
+2) Caulcuate \& plot the rotational transform vs minor radius. Hint: Count transits.\\
+
+3) Plot $\left|B\right|$ vs length $L$ for a field line at roughly 3/4 of the way to the separatrix from the axis. Follow this for a sufficient distance that you can see both the toroidal and helical modulation of the magnetic field strength.\\
+
+4) Add a 3/1 `error' field of the form $b_r=b_0\cos{(\phi{})}\cos{(3\theta)}$ to the nominal magnetic field. This error should resonant with the q=3 surface, and islands should appear. Try $b_0=0.5$ Gauss and plot the islands. Vary $b_0$ over a range of values. Can you determine how the island width scales? When are the surfaces completely destroyed? What happens away from the islands?
+
+% Alternative to the Solovev equilibrium project. Let's see how hard this is.
+\begin{comment}
+\newpage
+\clearpage
+
+\underline{Part \#2: Tokamak}\\
+Lets follow some orbits in a tokamak geometry. You are provided with a MATLAB routine that will calculate the magnetic field vector in a large aspect ratio tokamak with q ~3 at the R=10 m radius. You are also provided with routines that will calculate the gradient of the magnetic field strength along a field line, and in 3D. Look at the field-line tracer in Part \# and modify it for this problem. It should use MATLAB's `ode45' routine.\\
+
+1) Trace out orbits for co and counter injected circulating ions with energies of 500 eV. \\
+
+2) Calculate the necessary pitch angle for a particle which will turn around at R = 10 m when launched at the R = 10.3 m Z = 0 m point, and provide a trace of your simulation of that orbit.
+\end{comment}
+
+\newpage
+\clearpage
+
+\underline{Part \#2: Toroidal Equilibrium Magnetic Sensitivity}\\
+
+This project will use existing Solovev solutions to the Grad-Shafranov equation to see how one might place magnetic measurements around the tokamak to reconstruct the equilibrium. The project requires you to download the `One Size Fits All' Grad-Shafranov MATLAB solver by A. Cerfon et al of NYU\footnote{The solver used to be online, but now it's only on courseworks}. We will use the limited plasma tool. Your progress will be facilitated by converting the `main.m' MATLAB solver into a function that can be placed inside a loop. \\
+
+0) Read the `One Size Fits All' paper to understand how the solutions are generated. Note its basic similarity to Homework \#2.\\
+
+1) Use Cerfon's tool to define a base limited (no X-point) configuration. Options include: TFTR, JET, ITER, NSTX, MAST, FRC, Spheromak.\\
+
+2) Define a rectangular surface (height $h$, width $w$) that is outside the plasma, encircling it but not intersecting it. Hint: avoid R=0 singularities, and you may need to expand the $\Psi$ computational domain. Pretend this is the vacuum vessel. \\
+
+3) Use your knowledge of toroidal equilibrium to numerically convert the output $\Psi$ into $B_R$ and $B_Z$ components.\\
+
+4) Find and plot the flux and field components along your rectangular surface. It may be easier to treat each side separately.\\
+
+5) For the configuration you chose, repeat \#4 the above but with large reductions in elongation (make sure it still fits in the surface of part \#2.\\
+
+6) Based on the variations found in \#5, where would you position $B_R$, $B_Z$, and $\Psi$ sensors to maximize their sensitivity to the plasma shape change you imposed? Hint: Look where the signal is large and where it is changing the most.\\
+
+7) Repeat the above but varying the trianglarity (delta) from zero to above the reference shape. Where would $B_R$, $B_Z$, and $\Psi$ sensors be ideally located ?\\
+
+8) Repeat the above but varying the `A' parameter from zero to one in the reference shape. Where would $B_R$, $B_Z$, and $\Psi$ sensors be ideally located ?
+
+\end{document}
