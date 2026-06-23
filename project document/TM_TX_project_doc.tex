@@ -2,6 +2,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{epstopdf}
+\usepackage{xcolor}
 \usepackage{hyperref}
 %\hypersetup{colorlinks=false}
 \hypersetup{colorlinks,citecolor=black,filecolor=red,linkcolor=blue,urlcolor=blue,pdfnewwindow=true,bookmarksnumbered}
@@ -34,14 +35,14 @@
 
 In this project you will simulate the evolution of a tokamak plasma. You will use the TokaMaker+TORAX workflow, which is the coupling of two open source codes: TokaMaker and TORAX.
 
-\href{https://github.com/OpenFUSIONToolkit/OpenFUSIONToolkit}{TokaMaker} (TM) is a time-\textbf{independent} (steady state) Grad-Shafranov MHD equilibrium solver available through the OpenFUSIONToolkit suite of open source tools. Being familiar with TokaMaker is highly recommended before proceeding. The \href{https://fusion.columbia.edu/build-your-own-tokamak}{Build your own tokamak} project available through the Columbia Fusion Research Center Outreach website is a great way to become familiar with TokaMaker.
+\href{https://github.com/OpenFUSIONToolkit/OpenFUSIONToolkit}{TokaMaker} (TM) is a time-\textbf{independent} (steady state) Grad-Shafranov (MHD) equilibrium solver available through the OpenFUSIONToolkit suite of open source tools. Being familiar with TokaMaker is highly recommended before proceeding. The \href{https://fusion.columbia.edu/build-your-own-tokamak}{Build your own tokamak} project available through the Columbia Fusion Research Center Outreach website should be completed before beginning this project.
 
 \href{https://github.com/google-deepmind/torax}{TORAX} (TX) is a time-\textbf{dependent} transport solver developed by Google DeepMind. It solves the fluid transport equations to model how temperature (thermal energy), current, and density move through the plasma over time. Both codes are entirely open source and available on Github. 
 
-The TM+TX workflow couples these two codes and produces a time dependent solution for the radial kinetic (temperature and density) and current profiles on a realistic geometry (the equilibrium solution from TM). TM+TX passes the results of these two codes back and forth over several (2-4) loops until they converge.
+The TM+TX workflow couples these two codes and produces a time dependent solution for the radial kinetic (temperature and density) and current profiles on a realistic geometry (the equilibrium solution from TM). TM+TX passes the results of these two codes back and forth over several (2-4) loops until they converge. The code that couples TM and TX is a part of OFT.
 
 
-The notebook is in a working state using a default configuration. The goal of this project is to change inputs and see the effect on the equilibrated flattop plasma state and performance.
+The provided Jupyter notebook is in a working state using a default configuration. The first part of this project is to change inputs and see the effect on the equilibrated flattop plasma state and performance. Then the transient current ramp up phase will be added to see the effect of inputs on this phase and how they affect the early part of rampup (before the plasma has equilibrated).
 
 \newpage
 \clearpage
@@ -52,14 +53,26 @@ The initial task it so simulate the steady state (i.e. flattop) plasma. You are 
 
 This part will use TMTX in \texttt{steady\_state\_mode}, which speeds up convergence for these types of simulations. You will pass "seed equilibrium" (in the form of .eqdsk files) into TMTX, TORAX will evolve for some period of time (it should be enough that everything is at steady state), then TokaMaker will solve using the profiles output from TORAX to make new equilibria (saved as .eqdsk files). These new equilibria are passed to TORAX and it recomputes the simulation on the updated geometry. After 2 or 3 of these "loops, the simulation should converge and will output the final profiles and equilibrium of the flattop plasma.
 
-The Jupyter notebook is already configured to run the base case. Run the notebook up until 14. Sweeps to make sure everything is running correctly.
+The Jupyter notebook is already configured to run the base case. 
 
-1) Use the sweep code framework in section 14 of the notebook to run multiple simulations while sweeping (i.e. scanning) a single variable. 
+1) Modify the inputs to the base case simulation to match your best case values from the POPCON project. (Run cells through section 13.)
 
+
+2) Use the framework in section 14 of the notebook to run multiple simulations while sweeping (i.e. scanning) a single variable. This section uses the base case defined earlier and modifies one variable. You will scan variables on either side of your best case from step 1. Scan the following variables to show the sensitivity of fusion performance (Q) to each: $Z_{eff}$, $P_{aux}$, fueling rate, ... Discuss how each variable affects plasma performance and why.
+
+
+3) Update the base case to reflect any improvements found in Step 2.
+
+
+\newpage
+\clearpage
 
 
 \underline{Part \#2: Ramp up}
 
+In this phase you will model the plasma current ramp phase of the pulse. This phase starts with a small, limited plasma at low current, the increases the current and enlarges the cross section until the flattop parameters are reached. TMTX works similarly, except \texttt{steady\_state\_mode} will be turned off. 
+
+\textcolor{red}{What tasks? Minimize flux consumption? Vary $\dot{I}_p$? How many knobs to provide?}
 
 
 \end{document}
